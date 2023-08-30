@@ -15,7 +15,7 @@ public class TestArrayStack {
     }
 
     @Test
-    public void testPushAndPop() throws EmptyStackException {
+    public void testPushAndPop() {
         assertEquals(0, stack.size());
 
         stack.push(6);
@@ -33,7 +33,7 @@ public class TestArrayStack {
     }
 
     @Test
-    public void testResize() throws EmptyStackException {
+    public void testResize() {
         for (int i = 1; i < 7; i++) stack.push(i);
         assertEquals(6, stack.getArrayLength());
 
@@ -46,13 +46,63 @@ public class TestArrayStack {
     }
 
     @Test
-    public void testToString() throws EmptyStackException {
-        for (int i = 0; i < 10; i++) stack.push(i);
-        assertEquals("[0 1 2 3 4 5 6 7 8 9]", stack.toString());
-        stack.pop();
-        assertEquals("[0 1 2 3 4 5 6 7 8]", stack.toString());
-        stack.push(17);
-        assertEquals("[0 1 2 3 4 5 6 7 8 17]", stack.toString());
+    public void testToString() {
+        assertEquals(0, stack.size());
+        assertTrue(stack.isEmpty());
+        assertEquals("[]", stack.toString());
+
+        stack.push(5);
+        assertEquals("[5]", stack.toString());
+        stack.push(3);
+        assertEquals("[5 3]", stack.toString());
+
+        assertEquals(3, stack.pop());
+        assertEquals("[5]", stack.toString());
+
+        stack.push(7);
+        assertEquals("[5 7]", stack.toString());
+
+        assertEquals(7, stack.pop());
+        assertEquals("[5]", stack.toString());
+
+        assertEquals(5, stack.peek());
+        assertEquals("[5]", stack.toString());
+
+        assertEquals(5, stack.pop());
+        assertEquals("[]", stack.toString());
+
+        assertThrows(EmptyStackException.class, () -> stack.pop());
+        assertEquals("[]", stack.toString());
+
+        assertTrue(stack.isEmpty());
+        assertEquals("[]", stack.toString());
+
+        stack.push(9);
+        assertEquals("[9]", stack.toString());
+
+        stack.push(7);
+        assertEquals("[9 7]", stack.toString());
+
+        stack.push(3);
+        assertEquals("[9 7 3]", stack.toString());
+
+        stack.push(5);
+        assertEquals("[9 7 3 5]", stack.toString());
+
+        assertEquals(4, stack.size());
+        assertEquals("[9 7 3 5]", stack.toString());
+
+        assertEquals(5, stack.pop());
+        assertEquals("[9 7 3]", stack.toString());
+
+        stack.push(8);
+        assertEquals("[9 7 3 8]", stack.toString());
+
+        assertEquals(8, stack.pop());
+        assertEquals("[9 7 3]", stack.toString());
+
+        assertEquals(3, stack.pop());
+        assertEquals("[9 7]", stack.toString());
     }
 
 }
