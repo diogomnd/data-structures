@@ -37,10 +37,11 @@ public class ArrayStack<Item> implements Stack<Item> {
     @Override
     public Item pop() throws EmptyStackException {
         if (isEmpty()) throw new EmptyStackException("Stack is empty.");
-        top--;
         if (size() > 0 && size() == array.length / 4)
             resize(array.length / 2);
-        return array[top];
+        Item item = array[top];
+        top--;
+        return item;
     }
 
     @Override
@@ -63,6 +64,10 @@ public class ArrayStack<Item> implements Stack<Item> {
                 s.append(array[i]).append(" ");
         s.append("]");
         return s.toString();
+    }
+
+    public int getArrayLength() {
+        return this.array.length;
     }
 
 }
