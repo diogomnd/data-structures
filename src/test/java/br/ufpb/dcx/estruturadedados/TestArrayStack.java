@@ -35,14 +35,14 @@ public class TestArrayStack {
     @Test
     public void testResize() {
         for (int i = 1; i < 7; i++) stack.push(i);
-        assertEquals(6, stack.getArrayLength());
+        assertEquals(6, stack.capacity);
 
         stack.push(7);
         stack.push(8);
         stack.push(9);
 
         for (int i = 0; i < 7; i++) stack.pop();
-        assertEquals(6, stack.getArrayLength());
+        assertEquals(6, stack.capacity);
     }
 
     @Test

@@ -2,13 +2,15 @@ package br.ufpb.dcx.estruturadedados;
 
 public class ArrayStack<Item> implements Stack<Item> {
 
+    protected int capacity;
     private Item[] array;
     private int top;
 
     @SuppressWarnings("unchecked")
-    public ArrayStack(int capacity) {
-        this.top = -1;
-        this.array = (Item[]) new Object[capacity];
+    public ArrayStack(int cap) {
+        top = -1;
+        capacity = cap;
+        array = (Item[]) new Object[capacity];
     }
 
     @Override
@@ -29,25 +31,23 @@ public class ArrayStack<Item> implements Stack<Item> {
 
     @Override
     public void push(Item item) {
-        if (size() == array.length) resize(2 * array.length);
-        top++;
-        array[top] = item;
+        if (size() == capacity) resize(2 * capacity);
+        array[++top] = item;
     }
 
     @Override
     public Item pop() throws EmptyStackException {
         if (isEmpty()) throw new EmptyStackException("Stack is empty.");
-        if (size() > 0 && size() == array.length / 4)
-            resize(array.length / 2);
-        Item item = array[top];
-        top--;
+        Item item = array[top--];
+        if (size() > 0 && size() == capacity / 4) resize(capacity / 2);
         return item;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void resize(int newSize) {
-        Item[] temp = (Item[]) new Object[newSize];
+        capacity = newSize;
+        Item[] temp = (Item[]) new Object[capacity];
         for (int i = 0; i < size(); i++)
             temp[i] = array[i];
         array = temp;
@@ -55,19 +55,16 @@ public class ArrayStack<Item> implements Stack<Item> {
 
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder();
-        s.append("[");
-        for (int i = 0; i < size(); i++)
+        StringBuilder stackString = new StringBuilder();
+        stackString.append("[");
+        for (int i = 0; i < size(); i++) {
             if (i == size() - 1)
-                s.append(array[i]);
+                stackString.append(array[i]);
             else
-                s.append(array[i]).append(" ");
-        s.append("]");
-        return s.toString();
-    }
-
-    public int getArrayLength() {
-        return this.array.length;
+                stackString.append(array[i]).append(" ");
+        }
+        stackString.append("]");
+        return stackString.toString();
     }
 
 }
