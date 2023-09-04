@@ -1,13 +1,12 @@
 package br.ufpb.dcx.datastructures.stack;
 
 /**
- * Exception that will be thrown if pop() or top()
- * are executed on an empty stack
+ * Exception thrown if the stack is empty
  */
 public class EmptyStackException extends RuntimeException {
 
-    public EmptyStackException(String message) {
-        super(message);
+    public EmptyStackException(String err) {
+        super(err);
     }
 
 }

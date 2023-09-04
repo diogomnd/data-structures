@@ -1,17 +1,17 @@
-package br.ufpb.dcx.estruturadedados;
+package br.ufpb.dcx.datastructures.stack;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestArrayStack {
+public class TestResizingArrayStack {
 
-    ArrayStack<Integer> stack;
+    Stack<Integer> stack;
 
     @BeforeEach
     public void setUp() {
-        stack = new ArrayStack<>(3);
+        stack = new ResizingArrayStack<>(3);
     }
 
     @Test
@@ -35,14 +35,14 @@ public class TestArrayStack {
     @Test
     public void testResize() {
         for (int i = 1; i < 7; i++) stack.push(i);
-        assertEquals(6, stack.capacity);
+        assertEquals(6, stack.capacity());
 
         stack.push(7);
         stack.push(8);
         stack.push(9);
 
         for (int i = 0; i < 7; i++) stack.pop();
-        assertEquals(6, stack.capacity);
+        assertEquals(6, stack.capacity());
     }
 
     @Test

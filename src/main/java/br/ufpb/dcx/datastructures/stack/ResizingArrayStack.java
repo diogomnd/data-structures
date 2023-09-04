@@ -1,16 +1,21 @@
-package br.ufpb.dcx.estruturadedados;
+package br.ufpb.dcx.datastructures.stack;
 
-public class ArrayStack<Item> implements Stack<Item> {
+public class ResizingArrayStack<Item> implements Stack<Item> {
 
-    protected int capacity;
-    private Item[] array;
+    private int capacity;
+    private Item[] s;
     private int top;
 
     @SuppressWarnings("unchecked")
-    public ArrayStack(int cap) {
+    public ResizingArrayStack(int cap) {
         top = -1;
         capacity = cap;
-        array = (Item[]) new Object[capacity];
+        s = (Item[]) new Object[capacity];
+    }
+
+    @Override
+    public int capacity() {
+        return capacity;
     }
 
     @Override
@@ -26,45 +31,50 @@ public class ArrayStack<Item> implements Stack<Item> {
     @Override
     public Item peek() throws EmptyStackException {
         if (isEmpty()) throw new EmptyStackException("Stack is empty.");
-        return array[top];
+        return s[top];
     }
 
     @Override
     public void push(Item item) {
         if (size() == capacity) resize(2 * capacity);
-        array[++top] = item;
+        s[++top] = item;
     }
 
     @Override
     public Item pop() throws EmptyStackException {
         if (isEmpty()) throw new EmptyStackException("Stack is empty.");
-        Item item = array[top--];
-        if (size() > 0 && size() == capacity / 4) resize(capacity / 2);
+        Item item = s[top];
+        s[top--] = null;
+        if (size() == capacity / 4) resize(capacity / 2);
         return item;
     }
 
-    @Override
+    /**
+     * Resize the array
+     * @param newSize the new size that'll be used for resizing
+     */
     @SuppressWarnings("unchecked")
     public void resize(int newSize) {
         capacity = newSize;
         Item[] temp = (Item[]) new Object[capacity];
         for (int i = 0; i < size(); i++)
-            temp[i] = array[i];
-        array = temp;
+            temp[i] = s[i];
+        s = temp;
     }
 
     @Override
     public String toString() {
-        StringBuilder stackString = new StringBuilder();
-        stackString.append("[");
-        for (int i = 0; i < size(); i++) {
+        StringBuilder stringStack = new StringBuilder();
+        stringStack.append("[");
+        int size = size();
+        for (int i = 0; i < size; i++) {
             if (i == size() - 1)
-                stackString.append(array[i]);
+                stringStack.append(s[i]);
             else
-                stackString.append(array[i]).append(" ");
+                stringStack.append(s[i]).append(" ");
         }
-        stackString.append("]");
-        return stackString.toString();
+        stringStack.append("]");
+        return stringStack.toString();
     }
 
 }
