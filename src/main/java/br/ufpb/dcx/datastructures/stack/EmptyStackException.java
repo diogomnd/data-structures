@@ -1,4 +1,4 @@
-package br.ufpb.dcx.estruturadedados;
+package br.ufpb.dcx.datastructures.stack;
 
 /**
  * Exception that will be thrown if pop() or top()
