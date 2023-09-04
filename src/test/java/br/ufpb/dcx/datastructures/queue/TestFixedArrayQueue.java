@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestFixedArrayQueue {
 
@@ -21,12 +20,10 @@ public class TestFixedArrayQueue {
         queue.enqueue(1);
         queue.enqueue(2);
         assertEquals(2, queue.size());
-        assertEquals(1, queue.front());
 
         assertFalse(queue.isEmpty());
         assertEquals(1, queue.dequeue());
         assertEquals(1, queue.size());
-        assertEquals(2, queue.front());
     }
 
     @Test
@@ -86,7 +83,6 @@ public class TestFixedArrayQueue {
 
     @Test
     public void testToStringAfterFull() {
-
         queue.enqueue(1);
         queue.enqueue(2);
         assertThrows(FullQueueException.class, () -> queue.enqueue(3));

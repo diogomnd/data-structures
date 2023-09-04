@@ -2,8 +2,8 @@ package br.ufpb.dcx.datastructures.stack;
 
 public class FixedArrayStack<Item> implements Stack<Item> {
 
-    private int capacity;
-    private Item[] s;
+    private final int capacity;
+    private final Item[] s;
     private int top;
 
     @SuppressWarnings("unchecked")
@@ -49,12 +49,22 @@ public class FixedArrayStack<Item> implements Stack<Item> {
     }
 
     @Override
+    public void reverse() throws EmptyStackException {
+        if (isEmpty()) throw new EmptyStackException("Stack is empty");
+        Stack<Item> r = new FixedArrayStack<>(capacity);
+        for (int i = 0; i < capacity; i++)
+            r.push(s[i]);
+        for (int i = 0; i < capacity; i++)
+            s[i] = r.pop();
+    }
+
+    @Override
     public String toString() {
         StringBuilder stringStack = new StringBuilder();
         stringStack.append("[");
         int size = size();
         for (int i = 0; i < size; i++) {
-            if (i == size() - 1)
+            if (i == size - 1)
                 stringStack.append(s[i]);
             else
                 stringStack.append(s[i]).append(" ");

@@ -28,16 +28,16 @@ public interface Stack<Item> {
     /**
      * Returns the item on top of the stack
      * @return the item on top of the stack
-     * @throws EmptyStackException if the stack is empty
+     * @throws EmptyStackException if it's empty
      */
     Item peek() throws EmptyStackException;
 
     /**
      * Adds an item on top of the stack<br>
-     * If the stack is full, the array will be resized to
+     * If the variable-length stack is full, the array will be resized to
      * twice its original capacity
-     * @param item item to be added
-     * @throws FullStackException if the stack is full
+     * @param item the item to be added
+     * @throws FullStackException if it's full
      */
     void push(Item item) throws FullStackException;
 
@@ -45,9 +45,15 @@ public interface Stack<Item> {
      * Removes the item on top of the stack<br>
      * If size() is equal to a quarter of the array's original capacity,
      * it will be resized to half its original capacity
-     * @return the removed item
-     * @throws EmptyStackException if the stack is empty
+     * @return the item that was popped
+     * @throws EmptyStackException if it's empty
      */
     Item pop() throws EmptyStackException;
+
+    /**
+     * Reverses the stack
+     * @throws EmptyStackException if it's empty
+     */
+    void reverse() throws EmptyStackException;
 
 }

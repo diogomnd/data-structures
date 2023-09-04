@@ -50,16 +50,27 @@ public class ResizingArrayStack<Item> implements Stack<Item> {
     }
 
     /**
-     * Resize the array
+     * Resizes the array
      * @param newSize the new size that'll be used for resizing
      */
     @SuppressWarnings("unchecked")
-    public void resize(int newSize) {
-        capacity = newSize;
-        Item[] temp = (Item[]) new Object[capacity];
+    private void resize(int newSize) {
+        Item[] temp = (Item[]) new Object[newSize];
         for (int i = 0; i < size(); i++)
             temp[i] = s[i];
+        capacity = newSize;
         s = temp;
+    }
+
+    @Override
+    public void reverse() throws EmptyStackException {
+        if (isEmpty()) throw new EmptyStackException("Stack is empty");
+        Stack<Item> r = new ResizingArrayStack<>(capacity);
+        int size = size();
+        for (int i = 0; i < size; i++)
+            r.push(s[i]);
+        for (int i = 0; i < size; i++)
+            s[i] = r.pop();
     }
 
     @Override
@@ -68,7 +79,7 @@ public class ResizingArrayStack<Item> implements Stack<Item> {
         stringStack.append("[");
         int size = size();
         for (int i = 0; i < size; i++) {
-            if (i == size() - 1)
+            if (i == size - 1)
                 stringStack.append(s[i]);
             else
                 stringStack.append(s[i]).append(" ");

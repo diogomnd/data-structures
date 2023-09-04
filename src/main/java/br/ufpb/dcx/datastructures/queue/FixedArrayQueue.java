@@ -35,20 +35,20 @@ public class FixedArrayQueue<Item> implements Queue<Item> {
 
     @Override
     public Item front() throws EmptyQueueException {
-        if (isEmpty()) throw new EmptyQueueException("Queue is empty");
+        if (isEmpty()) throw new EmptyQueueException("Queue is empty.");
         return q[head];
     }
 
     @Override
     public void enqueue(Item item) throws FullQueueException {
-        if (size() == capacity - 1) throw new FullQueueException("Queue is full");
+        if (size() == capacity - 1) throw new FullQueueException("Queue is full.");
         q[tail] = item;
         tail = (tail + 1) % capacity;
     }
 
     @Override
     public Item dequeue() throws EmptyQueueException {
-        if (isEmpty()) throw new EmptyQueueException("Queue is empty");
+        if (isEmpty()) throw new EmptyQueueException("Queue is empty.");
         Item item = q[head];
         q[head] = null;
         head = (head + 1) % capacity;
@@ -61,11 +61,10 @@ public class FixedArrayQueue<Item> implements Queue<Item> {
         stringQueue.append("[");
         int size = size();
         for (int i = 0; i < size; i++) {
-            int j = (head + i) % capacity;
-            if (i == size() - 1)
-                stringQueue.append(q[j]);
+            if (i == size - 1)
+                stringQueue.append(q[(head + i) % capacity]);
             else
-                stringQueue.append(q[j]).append(" ");
+                stringQueue.append(q[(head + i) % capacity]).append(" ");
         }
         stringQueue.append("]");
         return stringQueue.toString();

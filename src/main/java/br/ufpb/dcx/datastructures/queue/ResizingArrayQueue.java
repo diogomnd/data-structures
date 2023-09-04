@@ -35,7 +35,7 @@ public class ResizingArrayQueue<Item> implements Queue<Item> {
 
     @Override
     public Item front() throws EmptyQueueException {
-        if (isEmpty()) throw new EmptyQueueException("Queue is empty");
+        if (isEmpty()) throw new EmptyQueueException("Queue is empty.");
         return q[head];
     }
 
@@ -48,7 +48,7 @@ public class ResizingArrayQueue<Item> implements Queue<Item> {
 
     @Override
     public Item dequeue() throws EmptyQueueException {
-        if (isEmpty()) throw new EmptyQueueException("Queue is empty");
+        if (isEmpty()) throw new EmptyQueueException("Queue is empty.");
         Item item = q[head];
         q[head] = null;
         head = (head + 1) % capacity;
@@ -61,13 +61,11 @@ public class ResizingArrayQueue<Item> implements Queue<Item> {
      * @param newSize the new size that'll be used for resizing
      */
     @SuppressWarnings("unchecked")
-    public void resize(int newSize) {
+    private void resize(int newSize) {
         Item[] temp = (Item[]) new Object[newSize];
         int n = size();
-        for (int i = 0; i < n; i++) {
-            int j = (head + i) % capacity;
-            temp[i] = q[j];
-        }
+        for (int i = 0; i < n; i++)
+            temp[i] = q[(head + i) % capacity];
         capacity = newSize;
         head = 0;
         tail = n;  // The next empty position
@@ -80,11 +78,10 @@ public class ResizingArrayQueue<Item> implements Queue<Item> {
         stringQueue.append("[");
         int size = size();
         for (int i = 0; i < size; i++) {
-            int j = (head + i) % capacity;
-            if (i == size() - 1)
-                stringQueue.append(q[j]);
+            if (i == size - 1)
+                stringQueue.append(q[(head + i) % capacity]);
             else
-                stringQueue.append(q[j]).append(" ");
+                stringQueue.append(q[(head + i) % capacity]).append(" ");
         }
         stringQueue.append("]");
         return stringQueue.toString();
