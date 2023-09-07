@@ -58,13 +58,12 @@ public class FixedArrayQueue<Item> implements Queue<Item> {
     @Override
     public String toString() {
         StringBuilder stringQueue = new StringBuilder();
-        stringQueue.append("[");
         int size = size();
+        stringQueue.append("[");
         for (int i = 0; i < size; i++) {
-            if (i == size - 1)
-                stringQueue.append(q[(head + i) % capacity]);
-            else
-                stringQueue.append(q[(head + i) % capacity]).append(" ");
+            stringQueue.append(q[(head + i) % capacity]);
+            if (i < size - 1)
+                stringQueue.append(" ");
         }
         stringQueue.append("]");
         return stringQueue.toString();

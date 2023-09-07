@@ -2,15 +2,15 @@ package br.ufpb.dcx.datastructures.stack;
 
 public class ResizingArrayStack<Item> implements Stack<Item> {
 
-    private int capacity;
     private Item[] s;
+    private int capacity;
     private int top;
 
     @SuppressWarnings("unchecked")
     public ResizingArrayStack(int cap) {
-        top = -1;
         capacity = cap;
         s = (Item[]) new Object[capacity];
+        top = -1;
     }
 
     @Override
@@ -45,21 +45,22 @@ public class ResizingArrayStack<Item> implements Stack<Item> {
         if (isEmpty()) throw new EmptyStackException("Stack is empty.");
         Item item = s[top];
         s[top--] = null;
-        if (size() == capacity / 4) resize(capacity / 2);
+        if (size() <= capacity / 4) resize(capacity / 2);
         return item;
     }
 
     /**
      * Resizes the array
-     * @param newSize the new size that'll be used for resizing
+     * @param newCapacity the new size that'll be used for resizing
      */
     @SuppressWarnings("unchecked")
-    private void resize(int newSize) {
-        Item[] temp = (Item[]) new Object[newSize];
-        for (int i = 0; i < size(); i++)
+    private void resize(int newCapacity) {
+        Item[] temp = (Item[]) new Object[newCapacity];
+        int size = size();
+        for (int i = 0; i < size; i++)
             temp[i] = s[i];
-        capacity = newSize;
         s = temp;
+        capacity = newCapacity;
     }
 
     @Override
@@ -76,13 +77,12 @@ public class ResizingArrayStack<Item> implements Stack<Item> {
     @Override
     public String toString() {
         StringBuilder stringStack = new StringBuilder();
-        stringStack.append("[");
         int size = size();
+        stringStack.append("[");
         for (int i = 0; i < size; i++) {
-            if (i == size - 1)
-                stringStack.append(s[i]);
-            else
-                stringStack.append(s[i]).append(" ");
+            stringStack.append(s[i]);
+            if (i < size - 1)
+                stringStack.append(" ");
         }
         stringStack.append("]");
         return stringStack.toString();

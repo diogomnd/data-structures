@@ -52,36 +52,35 @@ public class ResizingArrayQueue<Item> implements Queue<Item> {
         Item item = q[head];
         q[head] = null;
         head = (head + 1) % capacity;
-        if (size() == capacity / 4) resize(capacity / 2);
+        if (size() <= capacity / 4) resize(capacity / 2);
         return item;
     }
 
     /**
      * Resizes the array
-     * @param newSize the new size that'll be used for resizing
+     * @param newCapacity the new size that'll be used for resizing
      */
     @SuppressWarnings("unchecked")
-    private void resize(int newSize) {
-        Item[] temp = (Item[]) new Object[newSize];
-        int n = size();
-        for (int i = 0; i < n; i++)
+    private void resize(int newCapacity) {
+        Item[] temp = (Item[]) new Object[newCapacity];
+        int size = size();
+        for (int i = 0; i < size; i++)
             temp[i] = q[(head + i) % capacity];
-        capacity = newSize;
-        head = 0;
-        tail = n;  // The next empty position
         q = temp;
+        head = 0;
+        tail = size;  // The next empty position
+        capacity = newCapacity;
     }
 
     @Override
     public String toString() {
         StringBuilder stringQueue = new StringBuilder();
-        stringQueue.append("[");
         int size = size();
+        stringQueue.append("[");
         for (int i = 0; i < size; i++) {
-            if (i == size - 1)
-                stringQueue.append(q[(head + i) % capacity]);
-            else
-                stringQueue.append(q[(head + i) % capacity]).append(" ");
+            stringQueue.append(q[(head + i) % capacity]);
+            if (i < size - 1)
+                stringQueue.append(" ");
         }
         stringQueue.append("]");
         return stringQueue.toString();
